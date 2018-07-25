@@ -16,8 +16,8 @@
 .. |Python35| image:: https://img.shields.io/badge/python-3.5-blue.svg
 .. _Python35: https://badge.fury.io/py/pypipe
 
-.. |PyPi| image:: https://badge.fury.io/py/pypipe.svg
-.. _PyPi: https://badge.fury.io/py/pypipe
+.. |PyPi| image:: https://badge.fury.io/py/python-pypipe.svg
+.. _PyPi: https://badge.fury.io/py/python-pypipe
 
 
 ======
@@ -27,8 +27,17 @@ pypipe
 [pypipe] Python Package to Pipe processigs.
 
 pypipe is a Python package that provides an easy to use user graphical
-interface to pipe processings from different processing packages.
+interface to pipe processings from different packages.
 Visit also the `API documentation <http://AGrigis.github.io/pypipe>`_.
+
+To start with this package first display the application help::
+
+    pypipeview -h
+
+Then lauch this application in test mode::
+
+    pypipeview -t -d debug -r
+    
 
 
 

@@ -54,3 +54,77 @@ def test1(i1, i2, i3="a", i4=None, i5="", i6="test"):
             print("{0} is not a valid string.".format(param))
             r1 = 1
     return r1
+
+
+def generate_data(ndim=2):
+    """
+    Generate a toy dataset
+
+    Parameters
+    ----------
+    ndim: int, default 2
+        the output array dimension.
+
+    Returns
+    -------
+    data: array
+        the generated array.
+    """
+    import numpy
+    pixels = [[0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]]
+    pixels.append([0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0])
+    pixels.append([0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0])
+    pixels.append([0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0])
+    pixels.append([0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0])
+    pixels.append([1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1])
+    pixels.append([1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1])
+    pixels.append([1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1])
+    pixels.append([1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1])
+    pixels.append([1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1])
+    pixels.append([1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1])
+    pixels.append([1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1])
+    pixels.append([0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0])
+    pixels.append([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0])
+    pixels.append([0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0])
+    pixels.append([0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0])
+    data = numpy.asarray(pixels).T
+    if ndim not in (2, 3):
+        raise ValueError("Unsupported dimension.")
+    if ndim == 3:
+        data.shape += (1, )
+        data = numpy.concatenate((data, data * 5, data * 10), axis=-1)
+    return data
+
+
+def histogram(data, nbins=256, lower_cut=0., cumulate=0):
+    """
+    Compute the histogram of an input dataset.
+
+    Parameters
+    ----------
+    data: array
+        the dataset to be analysed.
+    nbins: int, default 256
+        the histogram number of bins.
+    lower_cut: float, default 0
+        do not consider the intensities under this threshold.
+    cumulate: bool, default False
+        if set compute the cumulate histogram.
+
+    Returns
+    -------
+    hist_im: Image
+        the generated histogram.
+    """
+    import numpy
+    hist, bins = numpy.histogram(data[data > lower_cut], nbins)
+    if cumulate:
+        cdf = hist.cumsum()
+        cdf_normalized = cdf * hist.max() / cdf.max()
+        hist_im = cdf_normalized
+    else:
+        hist_im = hist
+    return hist_im
+
+
+

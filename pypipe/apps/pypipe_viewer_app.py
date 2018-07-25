@@ -59,8 +59,22 @@ class PyPipeViewerApp(Application):
                             ("File", "Float", "Int", ("Enum", {"choices":
                              ("choice1", "choice2")}), ("Objects",
                              {"otype": "list"}), "Str"),
-                            ("Int", )
-                        ]
+                            (("Objects", {"otype": "int"}), )
+                        ],
+                        "load": [
+                            "pypipe.demo.generate_data",
+                            ("Int", ),
+
+                            (("Objects", {"otype": "ndarray"}), )
+                        ],
+                        "plotting": {
+                            "histogram": [
+                                "pypipe.demo.histogram",
+                                [["Objects", {"otype": "ndarray"}], "Int",
+                                  "Float", "Int"],
+                                [["Objects", {"otype": "ndarray"}]]
+                            ]
+                        }
                     }
                 }
             }

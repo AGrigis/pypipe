@@ -101,6 +101,7 @@ class FunctionParameters(QtGui.QWidget, Observable):
      
         # Execute it
         logger.debug("Execute function::")
+        logger.debug(expression)
         def f():
             exec expression in namespace  
         f()
@@ -121,12 +122,13 @@ class FunctionParameters(QtGui.QWidget, Observable):
                     else:  
                         self._objects[object_id] = namespace[name]
                 else:
+                    object_id = None
                     control.value = namespace[name]
         logger.debug("objects: {0}".format(self._objects))
         logger.debug("Function outputs done.")
 
         # Update interface
-        if update_interface :
+        if update_interface and object_id is not None:
             self.notify_observers("update", action="add", position=object_id)
 
         # Done

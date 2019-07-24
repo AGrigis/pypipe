@@ -10,11 +10,11 @@
 from pypipe.lib.controls import String
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 from ..timered_widgets import TimeredQLineEdit
 
 
-class QtString(QtGui.QWidget, String):
+class QtString(QtWidgets.QWidget, String):
     """ Define a string user control.
     """
     def __init__(self, value=None, *args, **kwargs):
@@ -26,11 +26,12 @@ class QtString(QtGui.QWidget, String):
             the parameter value.
         """
         super(QtString, self).__init__()
-        self._layout = QtGui.QHBoxLayout()
+        self._layout = QtWidgets.QHBoxLayout()
         self._init_ui() 
         String.__init__(self, value, *args, **kwargs)
         self._default_value = self._value or ""
         self.setLayout(self._layout)
+        self.reset()
 
     def reset(self):
         """ Reset the control to his initiale value.
@@ -45,8 +46,8 @@ class QtString(QtGui.QWidget, String):
         self.resize(1000, 27)
 
         # Define size policy
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -54,7 +55,7 @@ class QtString(QtGui.QWidget, String):
 
         # Update layout
         self._layout.setSpacing(0)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         # Add line edit + brows button to the layout

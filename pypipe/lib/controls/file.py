@@ -30,7 +30,7 @@ class File(Base):
             return True if the value is a file,
             False otherwise.
         """
-        if isinstance(value, unicode) and os.path.isfile(value):
+        if isinstance(value, str) and os.path.isfile(value):
             return True
         else:
             return False

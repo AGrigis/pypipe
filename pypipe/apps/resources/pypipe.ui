@@ -28,7 +28,16 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <property name="spacing">
@@ -45,12 +54,12 @@
      <x>0</x>
      <y>0</y>
      <width>839</width>
-     <height>33</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="help_menu">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionHelp"/>
     <addaction name="separator"/>
@@ -161,7 +170,7 @@
   <widget class="QDockWidget" name="dockWidgetParameters">
    <property name="minimumSize">
     <size>
-     <width>56</width>
+     <width>267</width>
      <height>200</height>
     </size>
    </property>
@@ -171,7 +180,14 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dock_parameters"/>
+   <widget class="QWidget" name="dock_parameters">
+    <property name="minimumSize">
+     <size>
+      <width>267</width>
+      <height>0</height>
+     </size>
+    </property>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidgetDoc">
    <property name="features">
@@ -200,7 +216,7 @@
      <normaloff>:/icones/help</normaloff>:/icones/help</iconset>
    </property>
    <property name="text">
-    <string>help</string>
+    <string>&amp;help</string>
    </property>
    <property name="toolTip">
     <string>Important information about this software.</string>
@@ -215,7 +231,7 @@
      <normaloff>:/icones/exit</normaloff>:/icones/exit</iconset>
    </property>
    <property name="text">
-    <string>quit</string>
+    <string>&amp;quit</string>
    </property>
    <property name="toolTip">
     <string>Shutdown the application.</string>
@@ -283,7 +299,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="icones.qrc">
+    <iconset>
      <normaloff>:/icones/play</normaloff>:/icones/play</iconset>
    </property>
    <property name="text">
@@ -372,7 +388,7 @@
  <connections>
   <connection>
    <sender>actionQuit</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>PyPipe</receiver>
    <slot>close()</slot>
    <hints>

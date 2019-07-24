@@ -10,7 +10,7 @@
 from pypipe.apps.resources.icones import *
 
 # Third party import
-from PySide.QtUiTools import QUiLoader
+from PySide2.QtUiTools import QUiLoader
 
 
 class MyQUiLoader(object):

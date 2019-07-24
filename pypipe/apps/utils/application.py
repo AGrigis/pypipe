@@ -13,10 +13,10 @@ import logging
 import warnings
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 
 
-class Application(QtGui.QApplication):
+class Application(QtWidgets.QApplication):
     """ Base Aplication class.
 
     Used to set some user options
@@ -51,7 +51,7 @@ class Application(QtGui.QApplication):
             line.
         """
         # Inheritance
-        QtGui.QApplication.__init__(self, [])
+        QtWidgets.QApplication.__init__(self, [])
 
         # Extra application options
         extra_options = extra_options or []
@@ -126,7 +126,7 @@ class Application(QtGui.QApplication):
         if self.options.redirect:
 
             # Create a message box
-            self.message_box = QtGui.QTextEdit()
+            self.message_box = QtWidgets.QTextEdit()
 
             # Redirect stdout and stderr
             sys.stdout = EmittingStream()

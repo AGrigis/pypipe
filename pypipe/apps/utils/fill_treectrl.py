@@ -7,7 +7,8 @@
 ##########################################################################
 
 # Soma import
-from PySide import QtGui
+from PySide2 import QtWidgets
+from PySide2 import QtGui
 
 # Global parameters
 font = QtGui.QFont("", 9, QtGui.QFont.Bold)
@@ -56,7 +57,7 @@ def add_tree_nodes(parent_item, menu, match, parent_module=""):
         the parent module string description ('module.sub_module')
     """
     # Go through the current module sub modules
-    for module_name, child_modules in menu.iteritems():
+    for module_name, child_modules in menu.items():
 
         # Filtering: check if we need to add this module in the tree
         if (match == "" or match in module_name.lower() or
@@ -64,7 +65,7 @@ def add_tree_nodes(parent_item, menu, match, parent_module=""):
 
             # Add the module name to the tree control
             if isinstance(child_modules, dict):
-                tree_item = QtGui.QTreeWidgetItem(
+                tree_item = QtWidgets.QTreeWidgetItem(
                     parent_item, [module_name, "None", "None", "None"])
                 if parent_module:
                     current_module = parent_module + "." + module_name
@@ -72,7 +73,7 @@ def add_tree_nodes(parent_item, menu, match, parent_module=""):
                     current_module = module_name
                 add_tree_nodes(tree_item, child_modules, match, current_module)
             else:
-                tree_item = QtGui.QTreeWidgetItem(
+                tree_item = QtWidgets.QTreeWidgetItem(
                     parent_item, [
                         module_name, child_modules[0], str(child_modules[1]),
                         str(child_modules[2])])
@@ -105,7 +106,7 @@ def search_in_menu(menu, match):
         return is_included
 
     # Go through the current module sub modules
-    for module_name, child_modules in menu.iteritems():
+    for module_name, child_modules in menu.items():
 
         # Stop criteria
         if isinstance(child_modules, list):

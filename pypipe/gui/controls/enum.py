@@ -10,11 +10,11 @@
 from pypipe.lib.controls import Enum
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 from ..timered_widgets import TimeredQLineEdit
 
 
-class QtEnum(QtGui.QWidget, Enum):
+class QtEnum(QtWidgets.QWidget, Enum):
     """ Define an enum user selection control.
     """
     def __init__(self, choices, value=None, *args, **kwargs):
@@ -30,7 +30,7 @@ class QtEnum(QtGui.QWidget, Enum):
         super(QtEnum, self).__init__()
         self._default_value = value
         Enum.__init__(self, value, choices=choices, *args, **kwargs)
-        self._layout = QtGui.QHBoxLayout()
+        self._layout = QtWidgets.QHBoxLayout()
         self._init_ui() 
         self.setLayout(self._layout)
 
@@ -49,8 +49,8 @@ class QtEnum(QtGui.QWidget, Enum):
         self.resize(1000, 27)
 
         # Define size policy
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -58,11 +58,11 @@ class QtEnum(QtGui.QWidget, Enum):
 
         # Update layout
         self._layout.setSpacing(0)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         # Add combo box to the layout
-        self._combo = QtGui.QComboBox(self)        
+        self._combo = QtWidgets.QComboBox(self)        
         for item in self.choices :
             self._combo.addItem(item)
         if self._default_value not in self.choices:

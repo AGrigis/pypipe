@@ -12,14 +12,14 @@ signal user modification only after an inactivity period.
 """
 
 # Third party import
-from PySide import QtCore, QtGui
+from PySide2 import QtCore, QtWidgets
 
 
 class QLineEditModificationTimer(QtCore.QObject):
 
     '''
     A QLineEditModificationTimer instance is accociated to a
-    QtGui.QLineEdit instance, it listens all user modification (Qt
+    QtWidgets.QLineEdit instance, it listens all user modification (Qt
     signal 'textChanged( const QString & )') and emits a
     signal 'userModification()' when timerInterval milliseconds passed
     since the last user modification.
@@ -32,7 +32,7 @@ class QLineEditModificationTimer(QtCore.QObject):
         '''
         Parameters
         ----------
-        qLineEdit: (QtGui.QLineEdit instance)
+        qLineEdit: (QtWidgets.QLineEdit instance)
             widget associated with this QLineEditModificationTimer.
         timerInterval: (milliseconds)
             minimum inactivity period before emitting
@@ -111,10 +111,10 @@ class QLineEditModificationTimer(QtCore.QObject):
 
 
 #-------------------------------------------------------------------------
-class TimeredQLineEdit(QtGui.QLineEdit):
+class TimeredQLineEdit(QtWidgets.QLineEdit):
 
     '''
-    Create a L{QLineEdit<QtGui.QLineEdit>} instance that has an private attribute
+    Create a L{QLineEdit<QtWidgets.QLineEdit>} instance that has an private attribute
     containing a L{QLineEditModificationTimer} associated to C{self}. Whenever
     the internal L{QLineEditModificationTimer} emits a C{SIGNAL(
     'userModification' )} signal, this signal is also emited by the
@@ -126,7 +126,7 @@ class TimeredQLineEdit(QtGui.QLineEdit):
     def __init__(self, *args, **kwargs):
         '''
         All non keyword parameters of the constructor are passed to
-        L{QLineEdit<QtGui.QLineEdit>} constructor. An optional C{timerInterval}
+        L{QLineEdit<QtWidgets.QLineEdit>} constructor. An optional C{timerInterval}
         keyword parameter can be given, it is passed to
         L{QLineEditModificationTimer} constructor. At the time this class was
         created, L{QLineEdit<qt.QLineEdit>} constructor did not accept keyword
@@ -134,9 +134,9 @@ class TimeredQLineEdit(QtGui.QLineEdit):
         '''
         timerInterval = kwargs.pop('timerInterval', None)
         if kwargs:
-            QtGui.QLineEdit.__init__(self, *args, **kwargs)
+            QtWidgets.QLineEdit.__init__(self, *args, **kwargs)
         else:
-            QtGui.QLineEdit.__init__(self, *args)
+            QtWidgets.QLineEdit.__init__(self, *args)
         self.__timer = QLineEditModificationTimer(self,
                                                   timerInterval=timerInterval)
         self.__timer.userModification.connect(self.userModification)

@@ -33,20 +33,15 @@ description = """
 PyPipe is a Python package that provides an easy to use user graphical
 interface to pipe processings from different processing packages.
 """
-long_description = """
-======
-PyPipe
-======
-
-PyPipe is a Python package that provides an easy to use user graphical
-interface to pipe processings from different processing packages.
-
-* Functions exposed in the user graphical interface are defined in a
-configuration file.
-"""
+long_description = (
+    "PyPipe\n\n"
+    "PyPipe is a Python package that provides an easy to use user graphical "
+    "interface to pipe processings from different processing packages.\n\n"
+    "* Functions exposed in the user graphical interface are defined in a "
+    "configuration file.\n")
 
 # versions for dependencies
-PYSIDE_MIN_VERSION = "1.2.2"
+PYSIDE_MIN_VERSION = "5.13.0"
 
 # Main setup parameters
 NAME = "PyPipe"
@@ -65,5 +60,5 @@ PLATFORMS = "OS Independent"
 ISRELEASE = True
 VERSION = __version__
 PROVIDES = ["pypipe"]
-REQUIRES = ["PySide>={0}".format(PYSIDE_MIN_VERSION) ]
+REQUIRES = ["PySide2>={0}".format(PYSIDE_MIN_VERSION) ]
 EXTRA_REQUIRES = {}

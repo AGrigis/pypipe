@@ -10,4 +10,4 @@
 # We'd better use compiled binary resources (rcc -binary)
 
 compile ressources with pyside-tools: 
-    pyside-rcc icones.qrc -o icones.py
+    pyside2-rcc icones.qrc -o icones.py

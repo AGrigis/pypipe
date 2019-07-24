@@ -10,10 +10,10 @@
 from pypipe.lib.controls import List
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 
 
-class QtList(QtGui.QWidget, List):
+class QtList(QtWidgets.QWidget, List):
     """ Define a list user control.
     """
     def __init__(self, value=None, *args, **kwargs):
@@ -25,10 +25,10 @@ class QtList(QtGui.QWidget, List):
             the parameter value.
         """
         super(QtList, self).__init__()
-        self._layout = QtGui.QHBoxLayout()
+        self._layout = QtWidgets.QHBoxLayout()
         self._init_ui() 
         List.__init__(self, value, *args, **kwargs)
-        self._default_value = unicode(self._value or "")
+        self._default_value = str(self._value or "")
         self.setLayout(self._layout)
 
     def reset(self):

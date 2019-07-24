@@ -14,7 +14,7 @@ Module that defines custom array rendering widgets.
 import numpy
 
 # Third party import
-import PySide
+import PySide2
 import pyqtgraph
 
 

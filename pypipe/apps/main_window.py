@@ -29,7 +29,7 @@ from pypipe.lib.utils import load_func_from_module_path
 
 # Third party import import
 import numpy
-from PySide import QtCore, QtGui, QtWebKit
+from PySide2 import QtCore, QtWidgets
 
 
 class PyPipeMainWindow(MyQUiLoader):
@@ -61,20 +61,20 @@ class PyPipeMainWindow(MyQUiLoader):
 
         # Define dynamic controls
         self.controls = {
-            QtGui.QAction: [
+            QtWidgets.QAction: [
                 "actionHelp", "actionQuit", "actionBrowse",
                 "actionParameters", "actionDocumentation", "actionBoard"],
-            QtGui.QTabWidget: [
+            QtWidgets.QTabWidget: [
                 "display"],
-            QtGui.QDockWidget: [
+            QtWidgets.QDockWidget: [
                 "dockWidgetBrowse", "dockWidgetParameters", "dockWidgetDoc",
                 "dockWidgetBoard"],
-            QtGui.QWidget: [
+            QtWidgets.QWidget: [
                 "dock_browse", "dock_parameters", "dock_doc",
                 "dock_board"],
-            QtGui.QTreeWidget: [
+            QtWidgets.QTreeWidget: [
                 "menu_treectrl"],
-            QtGui.QLineEdit: [
+            QtWidgets.QLineEdit: [
                 "search"],
         }
 
@@ -126,7 +126,7 @@ class PyPipeMainWindow(MyQUiLoader):
         error_message = "{0} has no attribute '{1}'"
 
         # Got through the class dynamic controls
-        for control_type, control_item in self.controls.iteritems():
+        for control_type, control_item in self.controls.items():
 
             # Get the dynamic control name
             for control_name in control_item:
@@ -274,9 +274,9 @@ class PyPipeMainWindow(MyQUiLoader):
         """ Event to display the package information.
         """
         # Create a dialog box to display the package information
-        win = QtGui.QDialog()
+        win = QtWidgets.QDialog()
         win.setWindowTitle("PyPipe Help")
-        QtGui.QMessageBox.information(self.ui, "Information", info())
+        QtWidgets.QMessageBox.information(self.ui, "Information", info())
 
     ###########################################################################
     # Private interface 
@@ -306,13 +306,13 @@ class PyPipeMainWindow(MyQUiLoader):
                 elif isinstance(new_object, numpy.ndarray):
                     display_widget = data_widget(new_object)
                 else:
-                    display_widget = QtGui.QLabel()
+                    display_widget = QtWidgets.QLabel()
                     display_widget.setText(repr(new_object))
                 self._insert_widget_in_tab(display_widget, signal.position)
             elif signal.action == "del":
                 self.ui.display.removeTab(signal.position)
                 for idx in range(signal.position, self.ui.display.count()):
-                    self.ui.display.setTabText(idx, unicode(idx))
+                    self.ui.display.setTabText(idx, str(idx))
 
         else:
             logger.debug("signal: None")
@@ -357,13 +357,13 @@ class PyPipeMainWindow(MyQUiLoader):
 
             # Check if we have a match: the tab name is equal to the current
             #pipeline name
-            if (self.ui.display.tabText(idx) == unicode(index)):
+            if (self.ui.display.tabText(idx) == str(index)):
                 already_created = True
                 break
 
         # If no match found, add a new tab with the widget
         if not already_created:
-            self.ui.display.addTab(widget, unicode(index))
+            self.ui.display.addTab(widget, str(index))
             self.ui.display.setCurrentIndex(self.ui.display.count() - 1)
 
         # Otherwise, replace the widget from the match tab
@@ -372,7 +372,7 @@ class PyPipeMainWindow(MyQUiLoader):
             self.ui.display.removeTab(index)
 
             # Insert the new tab
-            self.ui.display.insertTab(index, widget, unicode(index))
+            self.ui.display.insertTab(index, widget, str(index))
 
             # Set the corresponding index
             self.ui.display.setCurrentIndex(index)

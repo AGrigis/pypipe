@@ -17,14 +17,14 @@ from pypipe.gui.controls import QTCONTROLS
 
 # Third party import
 from docutils.core import publish_string, publish_parts
-from PySide import QtGui, QtCore, QtWebKit
+from PySide2 import QtWidgets, QtGui, QtCore, QtWebEngineWidgets
 
 
 # Create a logger
 logger = logging.getLogger(__name__)
 
 
-class FunctionDoc(QtGui.QWidget) :
+class FunctionDoc(QtWidgets.QWidget) :
     """ Generate function documentation widget from its rst docstring.
     """
     def __init__(self, function):
@@ -43,15 +43,15 @@ class FunctionDoc(QtGui.QWidget) :
         self.doc_html = publish_string(self._doc, writer_name="html")
 
         # Display the html documentation
-        self._layout = QtGui.QVBoxLayout()
-        self._text = QtWebKit.QWebView() 
-        self._text.setHtml(self.doc_html)
+        self._layout = QtWidgets.QVBoxLayout()
+        self._text = QtWebEngineWidgets.QWebEngineView() 
+        self._text.setHtml(self.doc_html.decode("utf8"))
         self._text.show()
         self._layout.addWidget(self._text)
         self.setLayout(self._layout)
 
 
-class FunctionParameters(QtGui.QWidget, Observable):
+class FunctionParameters(QtWidgets.QWidget, Observable):
     """ Generate function parameters widget.
     """  
     def __init__(self, function, objects=None, status_widget=None):
@@ -79,8 +79,8 @@ class FunctionParameters(QtGui.QWidget, Observable):
         self._status = status_widget
 
         # Define the widget main layout
-        self._layout = QtGui.QVBoxLayout()
-        self._grid = QtGui.QGridLayout()
+        self._layout = QtWidgets.QVBoxLayout()
+        self._grid = QtWidgets.QGridLayout()
         self._init_ui()
         self.setLayout(self._layout)
 
@@ -103,8 +103,11 @@ class FunctionParameters(QtGui.QWidget, Observable):
         logger.debug("Execute function::")
         logger.debug(expression)
         def f():
-            exec expression in namespace  
-        f()
+            exec(expression, namespace)
+        try:
+            f()
+        except:
+            logger.error("Error during function execution.")
         logger.debug("Execute function done.")
 
         # Update values
@@ -231,7 +234,7 @@ class FunctionParameters(QtGui.QWidget, Observable):
         """
         # Update layout
         self._layout.setSpacing(5)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(10, 0, 0, 0)
 
         # Auto controls
@@ -285,18 +288,18 @@ class FunctionParameters(QtGui.QWidget, Observable):
 
                 # Add input controls to the grid widget
                 if not control.is_output:
-                    self._grid.addWidget(QtGui.QLabel(pname), 2 * cnt, 0)
+                    self._grid.addWidget(QtWidgets.QLabel(pname), 2 * cnt, 0)
                     self._grid.addWidget(control, 2 * cnt + 1, 0)
                     cnt += 1
 
         # Run & reset buttons
-        self._run = QtGui.QPushButton("Run", self)
-        self._reset = QtGui.QPushButton("Reset", self)
-        hbox = QtGui.QHBoxLayout()
+        self._run = QtWidgets.QPushButton("Run", self)
+        self._reset = QtWidgets.QPushButton("Reset", self)
+        hbox = QtWidgets.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self._run)
         hbox.addWidget(self._reset)
-        vbox = QtGui.QVBoxLayout()
+        vbox = QtWidgets.QVBoxLayout()
         vbox.addStretch(1)
         vbox.addLayout(hbox)
 
@@ -308,7 +311,7 @@ class FunctionParameters(QtGui.QWidget, Observable):
         self._on_value_changed(None)
 
 
-class DeleteObjects(QtGui.QWidget, Observable):
+class DeleteObjects(QtWidgets.QWidget, Observable):
     """ Generate a widget to remove objects and notify observers.
     """
     def __init__(self, objects):
@@ -327,7 +330,7 @@ class DeleteObjects(QtGui.QWidget, Observable):
         super(DeleteObjects, self).__init__() 
 
         # Define the widget layout
-        self._layout = QtGui.QVBoxLayout()
+        self._layout = QtWidgets.QVBoxLayout()
         self._init_ui()
         self.setLayout(self._layout) 
         self.validate_form() 
@@ -341,10 +344,10 @@ class DeleteObjects(QtGui.QWidget, Observable):
         self._layout.addWidget(self.control)  
 
         # Add a delete button to the layout
-        frame  = QtGui.QFrame()
-        frame_layout = QtGui.QHBoxLayout()
+        frame  = QtWidgets.QFrame()
+        frame_layout = QtWidgets.QHBoxLayout()
         frame_layout.setAlignment(QtCore.Qt.AlignLeft)
-        self._del = QtGui.QToolButton()
+        self._del = QtWidgets.QToolButton()
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icones/delete"), QtGui.QIcon.Normal,
                        QtGui.QIcon.Off)
@@ -355,13 +358,13 @@ class DeleteObjects(QtGui.QWidget, Observable):
         frame_layout.addWidget(self._del)
 
         # Add a show button to the layout
-        self._show = QtGui.QToolButton()
+        self._show = QtWidgets.QToolButton()
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icones/add"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self._show.setIcon(icon)
         self._show.setIconSize(QtCore.QSize(24, 24))
-        self._show.setObjectName("delete_obj_icon")
+        self._show.setObjectName("add_obj_icon")
         self._show.clicked.connect(self.on_show_clicked)
         frame_layout.addWidget(self._show)
         frame.setLayout(frame_layout)
@@ -370,7 +373,7 @@ class DeleteObjects(QtGui.QWidget, Observable):
     def validate_form(self):
         """ Method that checks if all the controls are defined properly.
         """
-        all_controls_valid = self.control.valid  
+        all_controls_valid = len(self._objects) > 0
         self._del.setEnabled(all_controls_valid)
         self._show.setEnabled(all_controls_valid)
 

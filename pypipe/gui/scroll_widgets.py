@@ -11,10 +11,10 @@ Module that defines a scroll widget.
 """
 
 # Third party import
-from PySide import QtCore, QtGui
+from PySide2 import QtCore, QtWidgets
 
 
-class ScrollWidget(QtGui.QScrollArea):
+class ScrollWidget(QtWidgets.QScrollArea):
     """ Class that create a scroll widget.
 
     The widget is placed in a scroll area when large sets of parameters have
@@ -25,9 +25,9 @@ class ScrollWidget(QtGui.QScrollArea):
 
         Parameters
         ----------
-        widget: QtGui.QWidget
+        widget: QtWidgets.QWidget
             the widget that will be displayed in the scroll area.
-        parent: QtGui.QWidget (optional, default None)
+        parent: QtWidgets.QWidget (optional, default None)
             the controller widget parent widget.
         name: (optional, default None)
             the name of this controller widget
@@ -37,11 +37,11 @@ class ScrollWidget(QtGui.QScrollArea):
 
         # Allow the application to resize the scroll area items
         self.setWidgetResizable(True)
-        self.setSizePolicy(QtGui.QSizePolicy.Preferred,
-                           QtGui.QSizePolicy.Preferred)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                           QtWidgets.QSizePolicy.Preferred)
 
         # Display a surounding box
-        self.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.setFrameShape(QtWidgets.QFrame.StyledPanel)
 
         # Set the widget in the scroll area
         self.setWidget(widget)

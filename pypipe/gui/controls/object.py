@@ -10,10 +10,10 @@
 from pypipe.lib.controls import Object
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 
 
-class QtObjects(QtGui.QWidget, Object):
+class QtObjects(QtWidgets.QWidget, Object):
     """ Define a custom objects user control.
     """
     nb_item_per_line = 4
@@ -38,7 +38,7 @@ class QtObjects(QtGui.QWidget, Object):
         self._valid_type = otype
         Object.__init__(self, value, *args, **kwargs)
         super(QtObjects, self).__init__()
-        self._layout = QtGui.QGridLayout()
+        self._layout = QtWidgets.QGridLayout()
         self._init_ui()
         self.setLayout(self._layout)
 
@@ -49,8 +49,8 @@ class QtObjects(QtGui.QWidget, Object):
         self.resize(1000, 27)
 
         # Define size policy
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -58,7 +58,7 @@ class QtObjects(QtGui.QWidget, Object):
 
         # Update layout
         self._layout.setSpacing(0)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         # Add grid check boxes to the layout
@@ -70,7 +70,7 @@ class QtObjects(QtGui.QWidget, Object):
         cnt = 0
         for i in range(nb_full_lines):
             for j in range(self.nb_item_per_line):
-                button = QtGui.QRadioButton()
+                button = QtWidgets.QRadioButton()
                 otype = type(self._objects[cnt]).__name__
                 button.setToolTip("This is a <b>{0}</b> object.".format(otype))
                 button.setText(str(cnt))
@@ -84,7 +84,7 @@ class QtObjects(QtGui.QWidget, Object):
 
         # > add incomplete line
         for i in range(nb_rest_object):
-            button = QtGui.QRadioButton()
+            button = QtWidgets.QRadioButton()
             otype = type(self._objects[cnt]).__name__
             button.setToolTip("This is a <b>{0}</b> object.".format(otype))
             button.setText(str(cnt))
@@ -98,7 +98,7 @@ class QtObjects(QtGui.QWidget, Object):
 
         # > add create object check box
         if self.is_output:
-            checkBox = QtGui.QRadioButton()
+            checkBox = QtWidgets.QRadioButton()
             checkBox.setText("New")
             if self._default_value == "New":
                 checkBox.setChecked(True)

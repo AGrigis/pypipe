@@ -30,12 +30,12 @@ class String(Base):
             return True if the value is a string,
             False otherwise.
         """
-        # COMPATIBILITY: unicode not defined in python 3
+        # COMPATIBILITY: str not defined in python 3
         python_version = sys.version_info
         if python_version[0] == 3:
             if isinstance(value, (str, bytes)):
                 return True
-        elif isinstance(value, (str, unicode)):
+        elif isinstance(value, (str, str)):
             return True
         else:
             return False

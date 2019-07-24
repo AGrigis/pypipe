@@ -10,11 +10,11 @@
 from pypipe.lib.controls import Directory
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 from ..timered_widgets import TimeredQLineEdit
 
 
-class QtDirectory(QtGui.QWidget, Directory):
+class QtDirectory(QtWidgets.QWidget, Directory):
     """ Define a directory user selection control.
     """
     def __init__(self, value=None, *args, **kwargs):
@@ -26,7 +26,7 @@ class QtDirectory(QtGui.QWidget, Directory):
             the parameter value.
         """
         super(QtDirectory, self).__init__()
-        self._layout = QtGui.QHBoxLayout()
+        self._layout = QtWidgets.QHBoxLayout()
         self._default_value = value or ""
         self._init_ui() 
         Directory.__init__(self, value, *args, **kwargs)
@@ -40,8 +40,8 @@ class QtDirectory(QtGui.QWidget, Directory):
         self.resize(1000, 27)
 
         # Define size policy
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -49,7 +49,7 @@ class QtDirectory(QtGui.QWidget, Directory):
 
         # Update layout
         self._layout.setSpacing(0)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         # Add line edit + brows button to the layout
@@ -57,7 +57,7 @@ class QtDirectory(QtGui.QWidget, Directory):
         self._path.setText(self._default_value)
         self._path.userModification.connect(self._onedit)
         self._layout.addWidget(self._path)
-        self._button = QtGui.QPushButton('...', self)
+        self._button = QtWidgets.QPushButton('...', self)
         self._layout.addWidget(self._button)
         self._button.clicked.connect(self._onbrowse)
 
@@ -69,7 +69,7 @@ class QtDirectory(QtGui.QWidget, Directory):
     def _onbrowse(self):
         """ Define the browse associated action.
         """
-        directory = QtGui.QFileDialog.getExistingDirectory(
+        directory = QtWidgets.QFileDialog.getExistingDirectory(
             self, "Select directory", self._value or self._default_value)
         self._path.setText(directory)
         self._set_value(directory)

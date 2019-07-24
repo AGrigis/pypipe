@@ -50,7 +50,7 @@ def test1(i1, i2, i3="a", i4=None, i5="", i6="test"):
         print("{0} is not a valid integer.".format(i3))
         r1 = 1
     for param in (i4, i5):
-        if not isinstance(param, unicode):
+        if not isinstance(param, str):
             print("{0} is not a valid string.".format(param))
             r1 = 1
     return r1

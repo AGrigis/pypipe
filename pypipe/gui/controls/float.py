@@ -13,10 +13,10 @@ import re
 from pypipe.lib.controls import Float
 
 # Third party import
-from PySide import QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 
 
-class QtFloat(QtGui.QWidget, Float):
+class QtFloat(QtWidgets.QWidget, Float):
     """ Define a float user control.
     """
     def __init__(self, value=None, *args, **kwargs):
@@ -28,7 +28,7 @@ class QtFloat(QtGui.QWidget, Float):
             the parameter value.
         """
         super(QtFloat, self).__init__()
-        self._layout = QtGui.QHBoxLayout()
+        self._layout = QtWidgets.QHBoxLayout()
         self._default_value = value
         self._init_ui()
         Float.__init__(self, value, *args, **kwargs)
@@ -48,8 +48,8 @@ class QtFloat(QtGui.QWidget, Float):
         self.resize(1000, 27)
 
         # Define size policy
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -57,11 +57,11 @@ class QtFloat(QtGui.QWidget, Float):
 
         # Update layout
         self._layout.setSpacing(0)
-        self._layout.setSizeConstraint(QtGui.QLayout.SetMinimumSize)
+        self._layout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
         self._layout.setContentsMargins(0, 0, 0, 0)
 
         # Add line edit + brows button to the layout
-        self._float = QtGui.QLineEdit(self)
+        self._float = QtWidgets.QLineEdit(self)
         self._float.setText(
             str(self._default_value)
             if self._default_value is not None else "")

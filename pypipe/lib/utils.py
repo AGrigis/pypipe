@@ -7,7 +7,7 @@
 ##########################################################################
 
 # System import
-import __builtin__
+import builtins
 import re
 import inspect
 import logging
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 # Global parameters
-TYPES = [t for t in __builtin__.__dict__.itervalues() if isinstance(t, type)]
+TYPES = [t for t in builtins.__dict__.values() if isinstance(t, type)]
 
 
 def ordinal(num):
@@ -103,8 +103,8 @@ def returns(*accepted_return_type_tuple):
         """
         # Store the returned args in function parameter
         setattr(validate_function, "_output_types", accepted_return_type_tuple)
- 
-    	@functools.wraps(validate_function)
+
+        @functools.wraps(validate_function)
         def decorator_wrapper(*function_args, **function_args_dict):
             """ Define a sub-decorator to check the function parameters.
             """

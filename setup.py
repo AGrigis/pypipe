@@ -29,23 +29,9 @@ pkgdata = {
         os.path.join("apps", "resources", "*.ui"),
         os.path.join("test", "*.py")]
 }
-if sys.version_info >= (3, 0):
-    scripts = [
-        os.path.join("pypipe", "apps", "pypipeview3")
-    ]
-else:
-    scripts = [
-        os.path.join("pypipe", "apps", "pypipeview")
-    ]
-
-# Workaround
-if "--release" in sys.argv:
-    sys.argv.remove("--release")
-    scripts = [
-        os.path.join("pypipe", "apps", "pypipeview3"),
-        os.path.join("pypipe", "apps", "pypipeview")
-    ]
-
+scripts = [
+    os.path.join("pypipe", "apps", "pypipeview")
+]
 
 # Write setup
 setup(

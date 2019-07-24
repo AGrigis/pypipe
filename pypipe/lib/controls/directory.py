@@ -30,7 +30,7 @@ class Directory(Base):
             return True if the value is a directory,
             False otherwise.
         """
-        if isinstance(value, unicode) and os.path.isdir(value):
+        if isinstance(value, str) and os.path.isdir(value):
             return True
         else:
             return False
